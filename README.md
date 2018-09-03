@@ -45,7 +45,9 @@ We also include some [resources](#resources) at the bottom of the tutorial, so y
 
 You should have been given an IP for a cloud instance at the beginning of the course.  The cloud instance is already connected to a running Kubernetes cluster and it has all of the command line tools we will be needing throughout the tutorial. Normally, you would be doing all of the following from your local machine, but we've set up these cloud instances to avoid annoying local installations on conference WiFi (and to standardize environments). 
 
-To log into the cloud instance on Linux or Mac, open and terminal and:
+*Note - If you are following along with a video recording of this tutorial or trying to replicate things after the conference, you should be able to run everything below by deploying KubeFlow, Pachyderm, and Seldon locally via minikube or on GCP via GKE. More information on deploying KubeFlow and Seldon can be found [here](https://www.kubeflow.org/), and [these docs](https://pachyderm.readthedocs.io/en/latest) will walk you through deploying Pachyderm locally or in the cloud.* 
+
+To log into the tutorial cloud instance on Linux or Mac, open and terminal and:
 
 ```
 $ ssh pachrat@<remote machine IP>
@@ -59,6 +61,12 @@ To verify that everything is running correctly on the machine, you should be abl
 $ kubectl get all
 NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   32m
+```
+
+You will also need to clone the tutorial materials from GitHub to this machine:
+
+```
+$ git clone https://github.com/dwhitena/oreilly-ai-k8s-tutorial.git
 ```
 
 ## 2. Deploy KubeFlow
@@ -230,6 +238,7 @@ To do this, we have create two corresponding Pachyderm pipeline "specifications,
 To create the `split` and `pre_process` pipelines (to process the data in the `raw_data` repository),
 
 ```
+$ cd /home/pachrat/oreilly-ai-k8s-tutorial
 $ pachctl create-pipeline -f split.json
 $ pachctl create-pipeline -f pre_process.json
 ```
@@ -368,14 +377,14 @@ That image is now ready to be used in Seldon to serve the model.
 
 We have already deployed the Seldon cluster manager. Now we just need to let Seldon know about the model image that we built in Pachyderm, such that it can spin up inference servers to utilize that image.
 
-Check Docker Hub to find the image tag that you want to utilize for serving (should look like `<your user>/issuesummarization:<pachyderm job id>`), and then run the following:
+Check Docker Hub to find the image tag that you want to utilize for serving (should look like `<your user>/issuesummarization:<pachyderm job id>`), and then run the following (replacing `<your-docker-tag>` with the corresponding pachyderm job id that tags your docker image):
 
 ```
 $ cd /home/pachrat/my-kubeflow
 
 $ ks generate seldon-serve-simple issue-summarization-model-serving \
    --name=issue-summarization \
-   --image=pachyderm/issuesummarization:c822af9cd3d6434082783884c8a89ec2 \
+   --image=pachyderm/issuesummarization:<your-docker-tag> \
    --namespace=kubeflow \
    --replicas=2
 
@@ -426,9 +435,10 @@ The Pachyderm pipeline that we have deployed takes a unified view of (versioned)
 Let's try this out. Try updating your training data (e.g., take out a couple of rows), and then overwriting your previously committed data:
 
 ```
+$ cd /home/pachrat/oreilly-ai-k8s-tutorial
 $ wget https://nyc3.digitaloceanspaces.com/workshop-data/github_issues_medium.csv
 $ vim github_issues_medium.csv
-$ pachctl put-file raw_data master -o -f github_issues_medium_mod.csv
+$ pachctl put-file raw_data master -o -f github_issues_medium.csv
 ```
 
 (Remember, all this data is versioned, so we could go back at any point to another version of the raw data to revert or review changes)
@@ -474,9 +484,22 @@ Provenance:  __spec__/495a01e3df3a4318bb90b46d307d4009  __spec__/3526704d403041c
 
 ## Resources:
 
+KubeFlow:
+
+- Join [KubeFlow's public Slack team](https://join.slack.com/t/kubeflow/shared_invite/enQtMjgyMzMxNDgyMTQ5LWUwMTIxNmZlZTk2NGU0MmFiNDE4YWJiMzFiOGNkZGZjZmRlNTExNmUwMmQ2NzMwYzk5YzQxOWQyODBlZGY2OTg),
+- Find [KubeFlow on GitHub](https://github.com/kubeflow/kubeflow), and
+- Check out other [KubeFlow examples](https://github.com/kubeflow/examples).
+
+Pachyderm:
+
 - Join the [Pachyderm Slack team](http://slack.pachyderm.io/) to ask questions, get help, and talk about production deploys.
 - Follow [Pachyderm on Twitter](https://twitter.com/pachydermIO), 
 - Contribute to the discussion about [Pachyderm and KubeFlow integrations](https://github.com/kubeflow/kubeflow/issues/151#issuecomment-371628634),
 - Find [Pachyderm on GitHub](https://github.com/pachyderm/pachyderm), and
 - [Spin up Pachyderm](http://docs.pachyderm.io/en/latest/getting_started/getting_started.html) in just a few commands to try this and [other examples](http://docs.pachyderm.io/en/latest/examples/readme.html) locally.
+
+Seldon:
+
+- Find [Seldon on GitHub](https://github.com/SeldonIO/seldon-core) and checkout [their website](https://www.seldon.io/), and
+- Join Seldon's [public Slack team](https://bit.ly/seldon-slack).
 
