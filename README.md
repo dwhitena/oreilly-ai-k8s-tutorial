@@ -484,6 +484,8 @@ Provenance:  __spec__/495a01e3df3a4318bb90b46d307d4009  __spec__/3526704d403041c
 
 ## Resources:
 
+Slides from the class can be found [here](https://docs.google.com/presentation/d/1b-ihbK7kMFfIpDVIr0Jla3zIpEqG6_vgkvpTxIWP7WY/edit?usp=sharing).
+
 KubeFlow:
 
 - Join [KubeFlow's public Slack team](https://join.slack.com/t/kubeflow/shared_invite/enQtMjgyMzMxNDgyMTQ5LWUwMTIxNmZlZTk2NGU0MmFiNDE4YWJiMzFiOGNkZGZjZmRlNTExNmUwMmQ2NzMwYzk5YzQxOWQyODBlZGY2OTg),
