@@ -8,7 +8,9 @@ This tutorial will guide you through the deployment and utilization of an end-to
 - trains a sequence-to-sequence model to summarize GitHub issues,
 - version controls model binaries,
 - builds Docker images for serving the model, and
-- exports those Docker images to Seldon for serving.
+- exports those Docker images to a Docker registry and to Seldon for serving.
+
+![](https://docs.google.com/drawings/d/e/2PACX-1vSHu9avS_iSfhLki202i_ZzNxfvR8FaN2RawZVYWw-92tNuXp8EzmVBRZBRyuC5fEJcBHAqBIF3L3gs/pub?w=958&h=453)
 
 This example is based on the modeling code from [another KubeFlow example](https://github.com/kubeflow/examples/tree/master/github_issue_summarization). However, by using [Pachyderm](http://pachyderm.io/) to manage this example's data and pipeline, we can create a distributed pipeline that can:
 
