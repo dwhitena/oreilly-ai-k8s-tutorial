@@ -220,7 +220,7 @@ $ pachctl put-file raw_data master github_issues_medium.csv -f https://nyc3.digi
 We will now see that file versioned in the data repository:
 
 ```
-$ $ pachctl list-repo
+$ pachctl list-repo
 NAME     CREATED        SIZE
 raw_data 54 seconds ago 2.561MiB
 $ pachctl list-file raw_data master
