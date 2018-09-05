@@ -49,7 +49,7 @@ You should have been given an IP for a cloud instance at the beginning of the co
 
 *Note - If you are following along with a video recording of this tutorial or trying to replicate things after the conference, you should be able to run everything below by deploying KubeFlow, Pachyderm, and Seldon locally via minikube or on GCP via GKE. More information on deploying KubeFlow and Seldon can be found [here](https://www.kubeflow.org/), and [these docs](https://pachyderm.readthedocs.io/en/latest) will walk you through deploying Pachyderm locally or in the cloud.* 
 
-To log into the tutorial cloud instance on Linux or Mac, open and terminal and:
+To log into the tutorial cloud instance on Linux or Mac, open a terminal and:
 
 ```
 $ ssh pachrat@<remote machine IP>
