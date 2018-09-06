@@ -220,7 +220,7 @@ $ pachctl put-file raw_data master github_issues_medium.csv -f https://nyc3.digi
 We will now see that file versioned in the data repository:
 
 ```
-$ $ pachctl list-repo
+$ pachctl list-repo
 NAME     CREATED        SIZE
 raw_data 54 seconds ago 2.561MiB
 $ pachctl list-file raw_data master
@@ -252,7 +252,7 @@ Immediately a few things will happen:
 - Pachyderm "knows" that we want it to process any data in `raw_data` with these pipelines, so it will go ahead and spin up these jobs to perform the processing:
 
   ```
-  $ $ pachctl list-job
+  $ pachctl list-job
   ID                               OUTPUT COMMIT                                STARTED            DURATION       RESTART PROGRESS  DL       UL       STATE
   51a94ad5cdc447339e762d1e2f4a61a1 pre_process/a808c5b602f64302a679c7c369593a2a About a minute ago -              0       0 + 0 / 1 0B       0B       running
   ba2f6b00127f484da17353b053b9d0c0 split/778896608e71461db596a93bcf96f7c1       About a minute ago About a minute 0       1 + 0 / 1 2.561MiB 1.026MiB success
